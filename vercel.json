@@ -1,6 +1,0 @@
-{
-  "buildCommand": "npm run build",
-  "env": {
-    "VITE_API_URL": "https://backend-kanban-board-q2ft.onrender.com"
-  }
-}
