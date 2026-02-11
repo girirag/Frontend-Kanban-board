@@ -1,6 +1,10 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://backend-kanban-board-q2ft.onrender.com';
 
-console.log('API Base URL:', API_BASE_URL);
+if (typeof window !== 'undefined') {
+  console.log('Environment:', import.meta.env.MODE);
+  console.log('VITE_API_URL from env:', import.meta.env.VITE_API_URL);
+  console.log('API Base URL:', API_BASE_URL);
+}
 
 export interface Task {
   id: number;
