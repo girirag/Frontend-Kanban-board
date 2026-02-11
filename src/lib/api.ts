@@ -1,10 +1,12 @@
-// Hardcoded for Vercel deployment - environment variables not working
-const API_BASE_URL = 'https://backend-kanban-board-q2ft.onrender.com';
+// Use local backend in development, Render backend in production
+const API_BASE_URL = import.meta.env.DEV 
+  ? 'http://localhost:8001' 
+  : 'https://backend-kanban-board-q2ft.onrender.com';
 
 if (typeof window !== 'undefined') {
   console.log('Environment:', import.meta.env.MODE);
-  console.log('VITE_API_URL from env:', import.meta.env.VITE_API_URL);
-  console.log('API Base URL (hardcoded):', API_BASE_URL);
+  console.log('DEV mode:', import.meta.env.DEV);
+  console.log('API Base URL:', API_BASE_URL);
 }
 
 export interface Task {
