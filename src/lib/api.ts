@@ -2,7 +2,10 @@ const API_BASE_URL = import.meta.env.PROD
   ? 'https://backend-kanban-board-q2ft.onrender.com'
   : 'http://localhost:8001';
 
+const API_VERSION = '2.0';
+
 if (typeof window !== 'undefined') {
+  console.log('API Version:', API_VERSION);
   console.log('Environment:', import.meta.env.MODE);
   console.log('PROD mode:', import.meta.env.PROD);
   console.log('API Base URL:', API_BASE_URL);
