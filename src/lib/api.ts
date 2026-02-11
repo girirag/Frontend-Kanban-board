@@ -1,11 +1,10 @@
-// Use local backend in development, Render backend in production
-const API_BASE_URL = import.meta.env.DEV 
-  ? 'http://localhost:8001' 
-  : 'https://backend-kanban-board-q2ft.onrender.com';
+const API_BASE_URL = import.meta.env.PROD 
+  ? 'https://backend-kanban-board-q2ft.onrender.com'
+  : 'http://localhost:8001';
 
 if (typeof window !== 'undefined') {
   console.log('Environment:', import.meta.env.MODE);
-  console.log('DEV mode:', import.meta.env.DEV);
+  console.log('PROD mode:', import.meta.env.PROD);
   console.log('API Base URL:', API_BASE_URL);
 }
 
