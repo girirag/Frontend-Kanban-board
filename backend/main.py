@@ -295,7 +295,8 @@ init_firebase()
 
 if __name__ == "__main__":
     import uvicorn
+    port = int(os.getenv("PORT", 8001))
     print("🚀 Starting Kanban Board API...")
-    print("📊 API Documentation: http://localhost:8001/docs")
+    print(f"📊 API Documentation: http://localhost:{port}/docs")
     print("🔥 Firebase Status:", "Connected" if firebase_connected else "Using file backup")
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    uvicorn.run(app, host="0.0.0.0", port=port)
