@@ -111,6 +111,10 @@
         
         board["Planning"] = [...board["Planning"], newTaskData];
         board = { ...board };
+        
+        const maxId = Math.max(...Object.values(board).flat().map(t => t.id));
+        taskId = maxId + 1;
+        
         saveToLocalStorage();
         
         console.log('Task created via API:', newTaskData);
