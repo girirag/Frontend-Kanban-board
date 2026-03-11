@@ -2,7 +2,7 @@
   import { dndzone } from 'svelte-dnd-action';
   import { onMount, onDestroy } from "svelte";
   import { apiService, type Task } from '../lib/api';
-  import { onAuthChange, logout, handleRedirectResult } from '../lib/auth';
+  import { onAuthChange, logout } from '../lib/auth';
   import Login from '../lib/components/Login.svelte';
   import type { User } from 'firebase/auth';
 
@@ -69,23 +69,8 @@
     }
   }
 
-  onMount(async () => {
-    console.log('Component mounted, checking for redirect result...');
-    
-    // Handle redirect result from Google Sign-In
-    try {
-      const user = await handleRedirectResult();
-      if (user) {
-        console.log('User signed in via redirect:', user.email);
-      } else {
-        console.log('No redirect result found');
-      }
-    } catch (error: any) {
-      console.error('Redirect result error:', error);
-      if (error.code === 'auth/unauthorized-domain') {
-        console.error('Domain not authorized in Firebase Console');
-      }
-    }
+  onMount(() => {
+    console.log('Component mounted');
     
     unsubscribeAuth = onAuthChange(async (user) => {
       console.log('Auth state changed:', user?.email || 'No user');

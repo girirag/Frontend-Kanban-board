@@ -3,23 +3,32 @@
 
   let loading = false;
   let error = '';
+  let showPopupHelp = false;
 
   async function handleGoogleSignIn() {
     loading = true;
     error = '';
+    showPopupHelp = false;
+    
     try {
-      console.log('Starting Google Sign-In redirect...');
+      console.log('Starting Google Sign-In...');
       await signInWithGoogle();
-      // User will be redirected, so this code won't execute
+      console.log('Sign-in successful');
     } catch (err: any) {
       console.error('Sign in error:', err);
       loading = false;
-      if (err.code === 'auth/popup-closed-by-user') {
+      
+      if (err.code === 'auth/popup-blocked') {
+        showPopupHelp = true;
+        error = 'Popup was blocked by your browser. Please allow popups for this site and try again.';
+      } else if (err.code === 'auth/popup-closed-by-user') {
         error = 'Sign-in popup was closed. Please try again.';
       } else if (err.code === 'auth/unauthorized-domain') {
         error = 'This domain is not authorized. Please add it in Firebase Console.';
       } else if (err.code === 'auth/operation-not-allowed') {
         error = 'Google Sign-In is not enabled. Please enable it in Firebase Console (Authentication > Sign-in method > Google).';
+      } else if (err.code === 'auth/cancelled-popup-request') {
+        error = 'Another sign-in attempt is in progress. Please wait.';
       } else {
         error = `Failed to sign in: ${err.message || 'Please try again.'}`;
       }
@@ -118,6 +127,31 @@
     background: #fee2e2;
     border-radius: 8px;
   }
+
+  .popup-help {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #fef3c7;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 0.875rem;
+    color: #92400e;
+  }
+
+  .popup-help strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #78350f;
+  }
+
+  .popup-help ul {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  .popup-help li {
+    margin-bottom: 0.25rem;
+  }
 </style>
 
 <div class="login-container">
@@ -142,6 +176,17 @@
 
     {#if error}
       <div class="error">{error}</div>
+    {/if}
+    
+    {#if showPopupHelp}
+      <div class="popup-help">
+        <p><strong>How to allow popups:</strong></p>
+        <ul>
+          <li>Look for a popup blocked icon in your browser's address bar</li>
+          <li>Click it and select "Always allow popups from this site"</li>
+          <li>Then click "Sign in with Google" again</li>
+        </ul>
+      </div>
     {/if}
   </div>
 </div>
