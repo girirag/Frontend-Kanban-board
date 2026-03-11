@@ -2,7 +2,7 @@
   import { dndzone } from 'svelte-dnd-action';
   import { onMount, onDestroy } from "svelte";
   import { apiService, type Task } from '../lib/api';
-  import { onAuthChange, logout } from '../lib/auth';
+  import { onAuthChange, logout, handleRedirectResult } from '../lib/auth';
   import Login from '../lib/components/Login.svelte';
   import type { User } from 'firebase/auth';
 
@@ -69,7 +69,14 @@
     }
   }
 
-  onMount(() => {
+  onMount(async () => {
+    // Handle redirect result from Google Sign-In
+    try {
+      await handleRedirectResult();
+    } catch (error) {
+      console.error('Redirect result error:', error);
+    }
+    
     unsubscribeAuth = onAuthChange(async (user) => {
       currentUser = user;
       authLoading = false;
