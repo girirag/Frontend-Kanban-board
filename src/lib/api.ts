@@ -1,6 +1,8 @@
-const API_BASE_URL = import.meta.env.PROD 
-  ? 'https://backend-kanban-board-q2ft.onrender.com'
-  : 'http://localhost:8001';
+const API_BASE_URL = import.meta.env.VITE_API_URL || (
+  import.meta.env.PROD
+    ? 'https://backend-kanban-board-q2ft.onrender.com'
+    : 'http://localhost:8001'
+);
 
 const API_VERSION = '2.0';
 
